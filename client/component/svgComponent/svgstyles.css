@@ -1,4 +1,3 @@
-
 /* explores ------------------------------------------------------> */
 .checkBox {
   width: 15px;
@@ -32,7 +31,7 @@
 /* carousel ------------------------------------------------------> */
 
 .arrows {
-  display: inline-flex; 
+  display: inline-flex;
   flex-direction: row;
   width: 18px;
   height: 36px;
@@ -50,7 +49,6 @@
   fill: rgb(238, 238, 238);
 } */
 
-
 /* modal ------------------------------------------------------> */
 
 .mx {
@@ -60,9 +58,9 @@
   position: relative;
   vertical-align: text-bottom;
   width: 1em;
-  -webkit-transition: -webkit-transform .2s;
-  -webkit-transition: transform .2s;
-  transition: transform .2s;
+  -webkit-transition: -webkit-transform 0.2s;
+  -webkit-transition: transform 0.2s;
+  transition: transform 0.2s;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
@@ -102,5 +100,4 @@
   align-self: center;
   margin-left: 100px;
   margin-top: 60px;
-  
 }

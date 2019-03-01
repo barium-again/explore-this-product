@@ -24,25 +24,25 @@ class Explores extends React.Component {
       modalIndex: null,
       checkedBox: false
     };
-    this.fetchData =this.fetchData.bind(this);
+    this.fetchData = this.fetchData.bind(this);
     this.updateModalIndex = this.updateModalIndex.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.checkBox = this.checkBox.bind(this);
   }
 
   componentDidMount() {
-    this.fetchData();
+    this.fetchData(Math.floor(Math.random() * 20) + 1);
   }
 
-  fetchData() {
+  fetchData(id) {
     axios
-      .get('/explores')
-      .then((data) => {
-        this.setState({ lists: data.data }, () => {console.log(this.state.lists)})
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      .get(`/explores/${id}`)
+      .then(data =>
+        this.setState({ lists: data.data }, () => {
+          console.log(`Entry ${id}:`, data.data);
+        })
+      )
+      .catch(err => console.log(err));
   }
 
   updateModalIndex(index) {
@@ -53,15 +53,14 @@ class Explores extends React.Component {
     this.setState({ modalIndex: null });
   }
 
-  checkBox () {
-    this.setState({ checkedBox: !this.state.checkedBox })
+  checkBox() {
+    this.setState({ checkedBox: !this.state.checkedBox });
   }
 
   render() {
-
     return (
       <div>
-        <div className={styles.topDivider} ></div>
+        <div className={styles.topDivider} />
         {this.state.lists[0].exploresLists === '' ? (
           <div />
         ) : (
@@ -75,13 +74,16 @@ class Explores extends React.Component {
                 <div
                   style={{ width: '18px', height: '18px', alignSelf: 'center' }}
                 >
-                  <Checkbox 
-                  checkBox={this.checkBox}
-                  checkedBox={this.state.checkedBox}
+                  <Checkbox
+                    checkBox={this.checkBox}
+                    checkedBox={this.state.checkedBox}
                   />
                 </div>
                 <div className={styles.showLooks}>Show looks from my</div>
-                <img className={styles.beautyMatch} src={`https://s3-us-west-1.amazonaws.com/sephoraimage/BeautyMatchIcon.png`} />
+                <img
+                  className={styles.beautyMatch}
+                  src={`https://s3-us-west-1.amazonaws.com/sephoraimage/BeautyMatchIcon.png`}
+                />
                 <div
                   style={{
                     width: '18px',
