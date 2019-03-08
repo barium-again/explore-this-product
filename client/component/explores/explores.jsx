@@ -31,17 +31,13 @@ class Explores extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData(Math.floor(Math.random() * 20) + 1);
+    this.fetchData();
   }
 
-  fetchData(id) {
+  fetchData() {
     axios
-      .get(`/explores/${id}`)
-      .then(data =>
-        this.setState({ lists: data.data }, () => {
-          console.log(`Entry ${id}:`, data.data);
-        })
-      )
+      .get(`/explores/${Math.floor(Math.random() * 1e7) + 1}`)
+      .then(data => this.setState({ lists: data.data }))
       .catch(err => console.log(err));
   }
 

@@ -5,6 +5,6 @@ mongoose.connect('mongodb://localhost/explore', {
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error to db'));
-db.once('open', () => console.log('connected to db'));
+db.once('open', () => console.log('Connected to mongoDB'));
 
 module.exports = db;

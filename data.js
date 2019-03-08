@@ -1,4 +1,4 @@
-const mockarooData = [
+const data = [
   {
     myid: 1,
     headerComments: 'mesh rich functionalities',
@@ -5339,4 +5339,4 @@ const mockarooData = [
     productBrand: 'Wheat - Soft Kernal Of Wheat'
   }
 ];
-module.exports.mockarooData = mockarooData;
+module.exports = data;
