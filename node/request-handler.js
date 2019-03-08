@@ -8,28 +8,31 @@ let headers = {
   'Content-Type': 'application/json'
 };
 
+let mongodb;
+let url = 'mongodb://localhost:27017';
+
+MongoClient.connect(url, { useNewUrlParser: true }, (error, db) => {
+  if (error) {
+    console.log('MongoDB error connection');
+  } else {
+    console.log('MongoDB connection successful');
+    mongodb = db;
+  }
+});
+
 let requestHandler = (req, res) => {
-  let id = req.url.slice(10);
+  let id = JSON.parse(req.url.slice(10));
   if (req.method === 'GET') {
     if (req.url === `/explores/${id}`) {
-      let url = 'mongodb://localhost:27017/explore';
-      MongoClient.connect(url, { useNewUrlParser: true }, (error, client) => {
+      let explores = mongodb.db('explore').collection('explores');
+      explores.findOne({ productId: id }, (error, data) => {
         if (error) {
-          console.log(error);
+          res.writeHead(404, headers);
+          res.end();
         } else {
-          let db = client.db('explore');
-          let productId = JSON.parse(id);
-          db.collection('explores').findOne({ productId }, (error, data) => {
-            if (error) {
-              res.writeHead(404, headers);
-              res.end();
-            } else {
-              res.writeHead(200, headers);
-              res.end(JSON.stringify(data));
-            }
-          });
+          res.writeHead(200, headers);
+          res.end(JSON.stringify(data));
         }
-        client.close();
       });
     }
   }

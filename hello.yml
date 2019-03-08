@@ -1,5 +1,5 @@
 config:
-  target: 'https://artillery.io'
+  target: 'http://localhost:3000'
   phases:
     - duration: 60
       arrivalRate: 20
@@ -9,4 +9,4 @@ config:
 scenarios:
   - flow:
       - get:
-          url: '/docs'
+          url: '/explores/1'
