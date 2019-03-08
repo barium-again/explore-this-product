@@ -1,4 +1,4 @@
-const Explores = require('../db/model.js');
+const MongoClient = require('mongodb').MongoClient;
 
 let headers = {
   'access-control-allow-origin': '*',
@@ -9,18 +9,27 @@ let headers = {
 };
 
 let requestHandler = (req, res) => {
-  let productId = req.url.slice(10);
-
+  let id = req.url.slice(10);
   if (req.method === 'GET') {
-    if (req.url === `/explores/${productId}`) {
-      Explores.find({ productId }, (error, docs) => {
+    if (req.url === `/explores/${id}`) {
+      let url = 'mongodb://localhost:27017/explore';
+      MongoClient.connect(url, { useNewUrlParser: true }, (error, client) => {
         if (error) {
-          res.writeHead(404, headers);
+          console.log(error);
         } else {
-          let data = JSON.stringify(docs);
-          res.writeHead(200, headers);
-          res.end(data);
+          let db = client.db('explore');
+          let productId = JSON.parse(id);
+          db.collection('explores').findOne({ productId }, (error, data) => {
+            if (error) {
+              res.writeHead(404, headers);
+              res.end();
+            } else {
+              res.writeHead(200, headers);
+              res.end(JSON.stringify(data));
+            }
+          });
         }
+        client.close();
       });
     }
   }
