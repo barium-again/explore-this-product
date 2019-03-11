@@ -31,14 +31,14 @@ class Explores extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    this.fetchData(Math.floor(Math.random() * 1e7) + 1);
   }
 
-  fetchData() {
+  fetchData(id) {
     axios
-      .get(`/explores/${Math.floor(Math.random() * 1e7) + 1}`)
-      .then(data => this.setState({ lists: data.data }))
-      .catch(err => console.log(err));
+      .get(`/explores/${id}`)
+      .then(data => this.setState({ lists: [data.data] }))
+      .catch(err => console.error(err));
   }
 
   updateModalIndex(index) {

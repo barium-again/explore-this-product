@@ -1,11 +1,27 @@
-const Explores = require('../db/model.js');
+const MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb://andrew:password@52.26.174.132:27017/explore';
+let mongodb;
+
+MongoClient.connect(url, { useNewUrlParser: true }, (error, db) => {
+  if (error) {
+    console.log('MongoDB error connection');
+  } else {
+    console.log('MongoDB connection successful');
+    mongodb = db;
+  }
+});
 
 module.exports = {
   get: (req, res) => {
-    let { id } = req.params;
-    Explores.find({ productId: id })
-      .lean()
-      .then(data => res.status(200).send(data))
-      .catch(error => res.status(404).end(error));
+    let Explores = mongodb.db('explore').collection('explores');
+    let productId = JSON.parse(req.params.id);
+    console.log(productId);
+    Explores.findOne({ productId }, (error, data) => {
+      if (error) {
+        res.status(404).end(error);
+      } else {
+        res.status(200).send(data);
+      }
+    });
   }
 };
